@@ -35,8 +35,21 @@ class App extends Component {
     }
   }
 
-  onTodoChecked = () => {
+  onTodoChecked = (todoId, e) => {
+    this.setState({
+      todos: this.state.todos.map(todo => {
+        if(todo.id == todoId){
+          return todoFactory(todo.id, todo.title, e.target.checked)
+        }
+        return todo;
+      })
+    });
+  }
 
+  deleteTodo = (todoId) => {
+    this.setState({
+      todos: this.state.todos.filter(todo => todo.id != todoId)
+    });
   }
 
   render(){
@@ -60,15 +73,20 @@ class App extends Component {
           {
             this.state.todos.map((item) => {
               return(
-                <li key={item.id}>
+                <li key={item.id} className={item.checked ? 'checked' : ''}>
                     <input 
                       type = "checkbox" 
                       checked = {item.checked}
                       onChange = {(e) => {
-                        this.onTodoChecked(item.id)
+                        this.onTodoChecked(item.id, e)
                       }}
                     />
                     {item.title}
+                    <span onClick={() => {
+                      this.deleteTodo(item.id);
+                    }}>
+                      [x]
+                    </span>
                 </li>
               )
             })
