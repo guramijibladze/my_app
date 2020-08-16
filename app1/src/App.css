@@ -10,12 +10,12 @@ li.checked {
   text-decoration: line-through;
 }
 
-li span{
+li span.delete{
   visibility: hidden;
   cursor: pointer;
   color: red;
 }
 
-li:hover span{
+li:hover span.delete{
   visibility: visible;
 }
